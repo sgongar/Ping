@@ -1,0 +1,20 @@
+Recibe datos y comprueba rangos.
+Datos a recibir:
+    - Del arduino:
+        - Valores de posición
+            - Deberían activar la alarma por caida.
+                - Si hay caida se avisa alarma.
+        - Botón
+            - Cada quince minutos.
+                - Si no hay a los quince minutos pita.
+                - Si no hay a los veinte minutos avisa alarma.
+
+
+Datos a comprobar:
+
+
+Esquema del programa?
+
+Lanza dos hilos para ir comprobando. (La idea es que se puedan añadir más hilos si fuera necesario)
+Hay un flag que es la alarma.
+Si alguno de los dos hilos lo activa se sale del programa y se lanza la alarma.
