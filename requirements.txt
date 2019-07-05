@@ -1,4 +1,2 @@
 RPi.GPIO==0.6.5
 pybluez==0.22
-pyrebase==3.0.27
-pygame==1.9.6

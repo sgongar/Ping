@@ -1,54 +1,32 @@
+# -*- coding: utf-8 -*-
 import pyrebase
 
 
-config = {
-  "apiKey": "AIzaSyCY0kY9qBvVyE0dvngn9TwLXwb5xyt2_Jw",
-  "authDomain": "ping-7a807.firebaseapp.com",
-  "databaseURL": "https://ping-7a807.firebaseio.com/",
-  "storageBucket": "ping-7a807.appspot.com"
-}
+def get_user_information():
+    """
 
-firebase = pyrebase.initialize_app(config)
+    :return:
+    """
+    user_dict = {'user_id': 'Morty'}
 
-user_id = 'Morty'
+    return user_dict
 
-db = firebase.database()
+def set_up_firebase():
+    """
 
+    :return:
+    """
+    config = {
+        "apiKey": "AIzaSyCY0kY9qBvVyE0dvngn9TwLXwb5xyt2_Jw",
+        "authDomain": "ping-7a807.firebaseapp.com",
+        "databaseURL": "https://ping-7a807.firebaseio.com/",
+        "storageBucket": "ping-7a807.appspot.com"
+    }
 
-"""
-class CheckFirebase:
-    def __init__(self):
-        self.value = 0
-        self._lock = threading.Lock()
+    firebase = pyrebase.initialize_app(config)
 
-    def check(self, name):
-        print("alojomora")
-        logging.info("Thread %s: starting update", name)
-        logging.debug("Thread %s about to lock", name)
-        with self._lock:
-            logging.debug("Thread %s has lock", name)
-            local_copy = self.value
-            local_copy += 1
-            time.sleep(0.1)
-            self.value = local_copy
-            logging.debug("Thread %s about to release lock", name)
-        logging.debug("Thread %s after release", name)
-        logging.info("Thread %s: finishing update", name)
-
-
-if __name__ == "__main__":
-    format = "%(asctime)s: %(message)s"
-    logging.basicConfig(format=format, level=logging.INFO,
-                        datefmt="%H:%M:%S")
-
-    check = CheckFirebase()
-    logging.info("Testing update. Starting")
-    with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
-        # for index in range(2):
-        #     executor.submit(database.update, index)
-        executor.submit(CheckFirebase.check, "database")
-        executor.submit(CheckFirebase.check, "fall")
-"""
+    db = firebase.database()
+    return db
 
 
 def send_time(db, user_id):
