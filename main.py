@@ -8,6 +8,8 @@ from time import sleep
 # import pyrebase
 
 from firebase import send_time, set_up_firebase
+import I2C_LCD_driver
+from utils import get_time
 
 
 class PingDetect:
@@ -17,10 +19,10 @@ class PingDetect:
 
         """
         self.db = set_up_firebase()
-        user_id = 'Morty'
+        self.user_id = 'Morty'
+        self.mylcd = I2C_LCD_driver.lcd()
 
-        # for i in range(10):
-        #     send_time(self.db, user_id)
+        self.receive_data()
 
     def receive_data(self):
         """
@@ -31,13 +33,54 @@ class PingDetect:
         port = 1
         sock = BluetoothSocket(RFCOMM)
         sock.connect((bd_addr, port))
-        print('waiting')
+        self.display_info('Sistema listo', 1)
         while 1:
             data = sock.recv(10)
+            data = str(data, 'utf-8')
             print(data)
-            sleep(2.0)
 
+            if '1' in data:
+                actual_time = get_time()
+                self.mylcd.lcd_clear()
+                msg = 'Ping en {}'.format(actual_time)
+                send_time(self.db, self.user_id)
+                self.display_info('Sistema listo', 1)
+                self.display_info(msg, 2)
+            if '2' in data:
+                actual_time = get_time()
+                self.mylcd.lcd_clear()
+                msg = 'ALARMA {}'.format(actual_time)
+                send_time(self.db, self.user_id)
+                self.display_info('Sistema listo', 1)
+                self.display_info(msg, 2)
+            sleep(2.0)
         sock.close()
+
+    def display_info(self, msg, row):
+        """
+
+        :param msg:
+        :param row:
+        :return:
+        """
+        self.mylcd.lcd_display_string(msg, row, 0)
+
+    def scroll_info(self, msg):
+        """ todo, hay un loop infinito
+
+        :param msg:
+        :return:
+        """
+        str_pad = " " * 16
+        my_long_string = msg
+        my_long_string = str_pad + my_long_string
+
+        while True:
+            for i in range (0, len(my_long_string)):
+                lcd_text = my_long_string[i:(i+16)]
+                self.mylcd.lcd_display_string(lcd_text, 2)
+                sleep(0.2)
+                self.mylcd.lcd_display_string(str_pad, 2)
 
 
 if __name__ == "__main__":

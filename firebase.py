@@ -11,6 +11,7 @@ def get_user_information():
 
     return user_dict
 
+
 def set_up_firebase():
     """
 
@@ -39,6 +40,7 @@ def send_time(db, user_id):
 
     data = db.child("users").get()
     user_data = data.val().get(user_id)
+    print(user_data)
 
     new_data = {"name": "Mortimer 'Morty' Smith", "old_time": user_data['new_time'], "new_time": {".sv": "timestamp"},
                 "location": "raspberrypi"}

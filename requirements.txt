@@ -1,2 +1,4 @@
 RPi.GPIO==0.6.5
 pybluez==0.22
+pyrebase
+smbus
